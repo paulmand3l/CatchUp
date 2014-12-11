@@ -4,42 +4,56 @@ html
     meta(charset="utf-8")
     meta(name="viewport", content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width")
     title
-    link(href="lib/ionic/css/ionic.css", rel="stylesheet")
-    link(href="css/style.css", rel="stylesheet")
-    // If using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     link(href="css/ionic.app.css", rel="stylesheet")
 
     // ionic/angularjs js
     script(src="lib/ionic/js/ionic.bundle.js")
     // cordova script (this will be a 404 during development)
+    script(src="lib/ionic/js/ng-cordova.js")
     script(src="cordova.js")
     // your app's js
     script(src="js/app.js")
   body(ng-app="CatchUp")
-    ion-nav-bar
+    ion-nav-bar.bar-positive
       ion-nav-back-button.button-icon.ion-arrow-left-c
     ion-nav-view
 
     script(id="home.html", type="text/ng-template")
-      ion-view(title="Home")
-        ion-nav-buttons(side="left")
+      ion-view(title="Catch Up")
+        ion-nav-buttons(side="right")
           button.button.button-icon.icon.ion-plus-round(ng-click="pickContact()")
         ion-content
-          ion-list
-            ion-item(ng-repeat="catchUp in catchUps")
-              a(href="#/edit/{{$index}}") {{ catchUp.person.fullName }}
+          ion-list.catchUps
+            ion-item.item-icon-left.item-icon-right(ng-repeat="catchUp in catchUps", href="#/edit/{{$index}}")
+              i.icon.ion-android-person
+              span.fullName {{ catchUp.person.fullName }}
+              i.icon.ion-ios-telephone
+              i.icon.ion-chatbubble
 
     script(id="contacts.html", type="text/ng-template")
       .modal
         // Modal header bar
-        ion-header-bar.bar-secondary
+        ion-header-bar.bar-positive
           h1.title Contacts
-          button.button.button-clear.button-positive(ng-click="cancelPickContact()") Cancel
+          button.button.button-icon.ion-close-round(ng-click="cancelPickContact()")
         // Modal content area
         ion-content
-          ion-list
-            ion-item(ng-repeat="contact in contacts", ng-click="newCatchUp(contact)")
-              | {{ contact.fullName }}
+          ion-list.contacts
+            ion-item.item-icon-left.item-icon-right(ng-repeat="contact in contacts", ng-click="newCatchUp(contact)")
+              i.icon.ion-android-person
+              span.fullName {{ contact.fullName }}
+              i.icon.ion.plus-round
 
     script(id="edit.html", type="text/ng-template")
       ion-view(title="{{catchUp.person.fullName}}")
+        ion-content.edit-content
+          p.how-often How often do you want to catch up?
+          p.every Every
+          p.frequency {{catchUp.frequency}}
+          p.period
+            | {{catchUp.period}}
+            span(ng-show="catchUp.frequency > 1") s
+          p.change You can always change this later
+
+          .button-wrapper
+            button.button.button-block.button-large.button-royal.add-friend Add friend

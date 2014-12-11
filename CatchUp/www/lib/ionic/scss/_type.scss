@@ -103,13 +103,13 @@ blockquote {
   margin: 0 0 $line-height-computed;
   padding: ($line-height-computed / 2) $line-height-computed;
   border-left: 5px solid gray;
-  
+
   p {
     font-weight: 300;
     font-size: ($font-size-base * 1.25);
     line-height: 1.25;
   }
-  
+
   p:last-child {
     margin-bottom: 0;
   }
@@ -149,14 +149,19 @@ address {
 // Links
 // -------------------------
 
-a.subdued {
-  padding-right: 10px;
-  color: #888;
+a {
+  color: $dark;
   text-decoration: none;
 
   &:hover {
     text-decoration: none;
   }
+}
+
+a.subdued {
+  padding-right: 10px;
+  color: #888;
+
   &:last-child {
     padding-right: 0;
   }

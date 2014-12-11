@@ -1,0 +1,61 @@
+ion-item.item {
+  margin-top: 10px;
+  border: none;
+}
+
+ion-item.item {
+  background-color: $stable;
+
+  .item-content {
+    background-color: $stable;
+  }
+
+  i {
+    color: $royal;
+
+    &:first-child {
+      color: $positive;
+    }
+
+    &:nth-last-child(2) {
+      left: auto;
+      right: 50px;
+    }
+  }
+}
+
+.edit-content {
+  background-color: $stable;
+
+  p {
+    text-align: center;
+    color: $calm;
+    font-size: 14pt;
+  }
+
+  .how-often {
+    margin-top: 30px;
+  }
+
+  .every {
+    margin-top: 100px;
+  }
+
+  .frequency {
+    font-size: 100pt;
+    line-height: 1;
+    font-weight: 100;
+  }
+
+  .change {
+    margin-top: 80pt;
+  }
+
+  .button-wrapper {
+    margin: 0px 30px;
+
+    button.button.add-friend {
+      margin-top: 40px;
+    }
+  }
+}

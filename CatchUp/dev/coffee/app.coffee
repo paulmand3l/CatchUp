@@ -1,8 +1,3 @@
-# Ionic Starter App
-
-# angular.module is a global place for creating, registering and retrieving Angular modules
-# 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-# the 2nd parameter is an array of 'requires'
 angular.module("CatchUp", ["ionic"])
 
 .run ($ionicPlatform) ->
@@ -37,9 +32,8 @@ angular.module("CatchUp", ["ionic"])
   newCatchUp: (contact) ->
     # Add a new project
     person: contact
-    catchUpFrequency: 1
-    catchUpPeriod: 'month'
-
+    frequency: 1
+    period: 'month'
 
 .controller 'HomeCtrl', ($scope, $ionicModal, CatchUps) ->
   $scope.catchUps = CatchUps.all()

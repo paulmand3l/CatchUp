@@ -43,8 +43,8 @@
       newCatchUp: function(contact) {
         return {
           person: contact,
-          catchUpFrequency: 1,
-          catchUpPeriod: 'month'
+          frequency: 1,
+          period: 'month'
         };
       }
     };

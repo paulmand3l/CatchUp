@@ -4,30 +4,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <!-- If using Sass (run gulp sass first), then uncomment below and remove the CSS includes above-->
     <link href="css/ionic.app.css" rel="stylesheet">
     <!-- ionic/angularjs js-->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <!-- cordova script (this will be a 404 during development)-->
+    <script src="lib/ionic/js/ng-cordova.js"></script>
     <script src="cordova.js"></script>
     <!-- your app's js-->
     <script src="js/app.js"></script>
   </head>
   <body ng-app="CatchUp">
-    <ion-nav-bar>
+    <ion-nav-bar class="bar-positive">
       <ion-nav-back-button class="button-icon ion-arrow-left-c"></ion-nav-back-button>
     </ion-nav-bar>
     <ion-nav-view></ion-nav-view>
     <script id="home.html" type="text/ng-template">
-      <ion-view title="Home">
-        <ion-nav-buttons side="left">
+      <ion-view title="Catch Up">
+        <ion-nav-buttons side="right">
           <button ng-click="pickContact()" class="button button-icon icon ion-plus-round"></button>
         </ion-nav-buttons>
         <ion-content>
-          <ion-list>
-            <ion-item ng-repeat="catchUp in catchUps"><a href="#/edit/{{$index}}">{{ catchUp.person.fullName }}</a></ion-item>
+          <ion-list class="catchUps">
+            <ion-item ng-repeat="catchUp in catchUps" href="#/edit/{{$index}}" class="item-icon-left item-icon-right"><i class="icon ion-android-person"></i><span class="fullName">{{ catchUp.person.fullName }}</span><i class="icon ion-ios-telephone"></i><i class="icon ion-chatbubble"></i></ion-item>
           </ion-list>
         </ion-content>
       </ion-view>
@@ -35,20 +33,31 @@
     <script id="contacts.html" type="text/ng-template">
       <div class="modal">
         <!-- Modal header bar-->
-        <ion-header-bar class="bar-secondary">
+        <ion-header-bar class="bar-positive">
           <h1 class="title">Contacts</h1>
-          <button ng-click="cancelPickContact()" class="button button-clear button-positive">Cancel</button>
+          <button ng-click="cancelPickContact()" class="button button-icon ion-close-round"></button>
         </ion-header-bar>
         <!-- Modal content area-->
         <ion-content>
-          <ion-list>
-            <ion-item ng-repeat="contact in contacts" ng-click="newCatchUp(contact)">{{ contact.fullName }}</ion-item>
+          <ion-list class="contacts">
+            <ion-item ng-repeat="contact in contacts" ng-click="newCatchUp(contact)" class="item-icon-left item-icon-right"><i class="icon ion-android-person"></i><span class="fullName">{{ contact.fullName }}</span><i class="icon ion plus-round"></i></ion-item>
           </ion-list>
         </ion-content>
       </div>
     </script>
     <script id="edit.html" type="text/ng-template">
-      <ion-view title="{{catchUp.person.fullName}}"></ion-view>
+      <ion-view title="{{catchUp.person.fullName}}">
+        <ion-content class="edit-content">
+          <p class="how-often">How often do you want to catch up?</p>
+          <p class="every">Every</p>
+          <p class="frequency">{{catchUp.frequency}}</p>
+          <p class="period">{{catchUp.period}}<span ng-show="catchUp.frequency &gt; 1">s</span></p>
+          <p class="change">You can always change this later</p>
+          <div class="button-wrapper">
+            <button class="button button-block button-large button-royal add-friend">Add friend</button>
+          </div>
+        </ion-content>
+      </ion-view>
     </script>
   </body>
 </html>
