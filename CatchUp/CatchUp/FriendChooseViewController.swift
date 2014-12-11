@@ -56,7 +56,7 @@ class FriendChooserViewController: UIViewController, UITableViewDataSource, UITa
         
         let personName = getName(person)
         
-        cell.textLabel.text = personName
+        cell.textLabel?.text = personName
         
         return cell
     }

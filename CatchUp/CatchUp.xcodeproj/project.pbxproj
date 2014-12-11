@@ -35,6 +35,7 @@
 		24BFAEDE1A296826005B9276 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24BFAEDC1A296826005B9276 /* LaunchScreen.xib */; };
 		24BFAEEA1A296826005B9276 /* CatchUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BFAEE91A296826005B9276 /* CatchUpTests.swift */; };
 		24BFAEF51A2968D6005B9276 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 24BFAEF41A2968D6005B9276 /* splash.png */; };
+		24E021A31A36DE8300E0BCDF /* CatchupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E021A21A36DE8300E0BCDF /* CatchupDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		24BFAEE81A296826005B9276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24BFAEE91A296826005B9276 /* CatchUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchUpTests.swift; sourceTree = "<group>"; };
 		24BFAEF41A2968D6005B9276 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
+		24E021A21A36DE8300E0BCDF /* CatchupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatchupDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 				24BFAEF31A2968D6005B9276 /* assets */,
 				24BFAED21A296826005B9276 /* CatchUp.xcdatamodeld */,
 				24BFAECE1A296826005B9276 /* Supporting Files */,
+				24E021A21A36DE8300E0BCDF /* CatchupDetailViewController.swift */,
 			);
 			path = CatchUp;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 			files = (
 				248B61801A2AE51D008BF9EB /* MainViewController.swift in Sources */,
 				24BFAED61A296826005B9276 /* FriendChooseViewController.swift in Sources */,
+				24E021A31A36DE8300E0BCDF /* CatchupDetailViewController.swift in Sources */,
 				24BFAED41A296826005B9276 /* CatchUp.xcdatamodeld in Sources */,
 				24BFAED11A296826005B9276 /* AppDelegate.swift in Sources */,
 			);

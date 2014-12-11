@@ -57,10 +57,29 @@ class MainViewController: UITableViewController, ABPeoplePickerNavigationControl
         
         let person = catchUps[indexPath.row]
         
-        cell.textLabel.text = person.valueForKey("name") as String?
+        cell.textLabel?.text = person.valueForKey("name") as String?
         cell.detailTextLabel?.text = "No catch up date set"
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("editCatchup", sender: tableView)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if segue.identifier == "editCatchup" {
+            let editCatchupViewController = segue.destinationViewController as CatchupDetailViewController
+            
+            let indexPath = self.tableView.indexPathForSelectedRow()!
+            let destinationTitle = self.catchUps[indexPath.row].valueForKey("name") as String?
+            editCatchupViewController.title = destinationTitle
+            
+            let person = catchUps[indexPath.row]
+            
+            editCatchupViewController.catchupFrequency = person.valueForKey("catchupFrequency") as Int?
+            editCatchupViewController.catchupPeriod = person.valueForKey("catchupPeriod") as String?
+        }
     }
     
     @IBAction func addCatchup(sender: UIBarButtonItem) {
@@ -93,8 +112,13 @@ class MainViewController: UITableViewController, ABPeoplePickerNavigationControl
         let person = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
         
         let name = ABRecordCopyCompositeName(personToSave)?.takeRetainedValue() as String? ?? ""
-        println(name)
         person.setValue(name, forKey: "name")
+        person.setValue(1 as Int?, forKey: "catchupFrequency")
+        person.setValue("month" as String?, forKey: "catchupPeriod")
+        
+        let oneMonth : Double = 1*30*24*60*60
+        
+        person.setValue(NSDate(timeIntervalSinceNow: oneMonth), forKey: "nextCatchup")
         
         var error: NSError?
         if !managedContext.save(&error) {
