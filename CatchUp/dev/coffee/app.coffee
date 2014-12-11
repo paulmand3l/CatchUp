@@ -41,8 +41,13 @@ angular.module("CatchUp", ["ionic", "ngCordova"])
   $scope.pickContact = ->
     $cordovaContacts.pickContact().then (contact) ->
       newCatchUp = CatchUps.newCatchUp contact
-      $scope.catchUps.push newCatchUp
-      CatchUps.save $scope.catchUps
+
+      duplicate = $scope.catchUps.some (catchUp) ->
+        catchUp.person.name.formatted is newCatchUp.person.name.formatted
+
+      unless duplicate
+        $scope.catchUps.push newCatchUp
+        CatchUps.save $scope.catchUps
 
 .controller 'EditCtrl', ($scope, CatchUps, $stateParams, $ionicNavBarDelegate) ->
   $scope.catchUp = CatchUps.get $stateParams.catchUpId

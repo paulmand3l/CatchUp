@@ -52,10 +52,15 @@
     $scope.catchUps = CatchUps.all();
     return $scope.pickContact = function() {
       return $cordovaContacts.pickContact().then(function(contact) {
-        var newCatchUp;
+        var duplicate, newCatchUp;
         newCatchUp = CatchUps.newCatchUp(contact);
-        $scope.catchUps.push(newCatchUp);
-        return CatchUps.save($scope.catchUps);
+        duplicate = $scope.catchUps.some(function(catchUp) {
+          return catchUp.person.name.formatted === newCatchUp.person.name.formatted;
+        });
+        if (!duplicate) {
+          $scope.catchUps.push(newCatchUp);
+          return CatchUps.save($scope.catchUps);
+        }
       });
     };
   }).controller('EditCtrl', function($scope, CatchUps, $stateParams, $ionicNavBarDelegate) {
