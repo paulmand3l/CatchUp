@@ -4,31 +4,51 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
-
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <!-- If using Sass (run gulp sass first), then uncomment below and remove the CSS includes above-->
     <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-
-    <!-- ionic/angularjs js -->
+    <!-- ionic/angularjs js-->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-
-    <!-- cordova script (this will be a 404 during development) -->
+    <!-- cordova script (this will be a 404 during development)-->
     <script src="cordova.js"></script>
-
-    <!-- your app's js -->
+    <!-- your app's js-->
     <script src="js/app.js"></script>
   </head>
-  <body ng-app="starter">
-
-    <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
-      </ion-header-bar>
-      <ion-content>
-      </ion-content>
-    </ion-pane>
+  <body ng-app="CatchUp">
+    <ion-nav-bar>
+      <ion-nav-back-button class="button-icon ion-arrow-left-c"></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view></ion-nav-view>
+    <script id="home.html" type="text/ng-template">
+      <ion-view title="Home">
+        <ion-nav-buttons side="left">
+          <button ng-click="pickContact()" class="button button-icon icon ion-plus-round"></button>
+        </ion-nav-buttons>
+        <ion-content>
+          <ion-list>
+            <ion-item ng-repeat="catchUp in catchUps"><a href="#/edit/{{$index}}">{{ catchUp.person.fullName }}</a></ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-view>
+    </script>
+    <script id="contacts.html" type="text/ng-template">
+      <div class="modal">
+        <!-- Modal header bar-->
+        <ion-header-bar class="bar-secondary">
+          <h1 class="title">Contacts</h1>
+          <button ng-click="cancelPickContact()" class="button button-clear button-positive">Cancel</button>
+        </ion-header-bar>
+        <!-- Modal content area-->
+        <ion-content>
+          <ion-list>
+            <ion-item ng-repeat="contact in contacts" ng-click="newCatchUp(contact)">{{ contact.fullName }}</ion-item>
+          </ion-list>
+        </ion-content>
+      </div>
+    </script>
+    <script id="edit.html" type="text/ng-template">
+      <ion-view title="{{catchUp.person.fullName}}"></ion-view>
+    </script>
   </body>
 </html>
