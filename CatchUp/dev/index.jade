@@ -26,26 +26,12 @@ html
           ion-list.catchUps
             ion-item.item-icon-left.item-icon-right(ng-repeat="catchUp in catchUps", href="#/edit/{{$index}}")
               i.icon.ion-android-person
-              span.fullName {{ catchUp.person.fullName }}
+              span.displayName {{ catchUp.person.name.formatted }}
               i.icon.ion-ios-telephone
               i.icon.ion-chatbubble
 
-    script(id="contacts.html", type="text/ng-template")
-      .modal
-        // Modal header bar
-        ion-header-bar.bar-positive
-          h1.title Contacts
-          button.button.button-icon.ion-close-round(ng-click="cancelPickContact()")
-        // Modal content area
-        ion-content
-          ion-list.contacts
-            ion-item.item-icon-left.item-icon-right(ng-repeat="contact in contacts", ng-click="newCatchUp(contact)")
-              i.icon.ion-android-person
-              span.fullName {{ contact.fullName }}
-              i.icon.ion.plus-round
-
     script(id="edit.html", type="text/ng-template")
-      ion-view(title="{{catchUp.person.fullName}}")
+      ion-view(title="{{catchUp.person.name.formatted}}")
         ion-content.edit-content
           p.how-often How often do you want to catch up?
           p.every Every
