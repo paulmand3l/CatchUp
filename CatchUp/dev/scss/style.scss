@@ -58,4 +58,34 @@ ion-item.item {
       margin-top: 40px;
     }
   }
+
+  $sliderHandleRadius: 30px;
+  $sliderHandleBorder: 5px;
+  $trackWidth: 8px;
+
+  .ui-slider {
+    border: none;
+    background-color: $balanced;
+
+    position: absolute;
+    top: 100px;
+    right: 70px;
+    height: 300px;
+
+    .ui-slider-handle {
+      background-color: $royal;
+      width: $sliderHandleRadius * 2;
+      height: $sliderHandleRadius * 2;
+      border-radius: $sliderHandleRadius;
+      border: $sliderHandleBorder solid $stable;
+    }
+  }
+  .ui-slider-vertical {
+    width: $trackWidth;
+
+    .ui-slider-handle {
+      left: $trackWidth/2 - $sliderHandleRadius;
+      margin-bottom: -1 * ($sliderHandleRadius);
+    }
+  }
 }

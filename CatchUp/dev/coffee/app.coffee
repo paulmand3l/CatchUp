@@ -1,4 +1,10 @@
-angular.module("CatchUp", ["ionic", "ngCordova"])
+FREQUENCY_SCALE = []
+for period, frequencyList of { week: [1, 2, 3], month: [1, 2, 3, 4, 6, 8], year: [1] }
+  for f in frequencyList
+    FREQUENCY_SCALE.push [f, period]
+
+
+angular.module("CatchUp", ["ionic", "ngCordova", "ui.slider"])
 
 .run ($ionicPlatform) ->
   $ionicPlatform.ready ->
@@ -35,8 +41,14 @@ angular.module("CatchUp", ["ionic", "ngCordova"])
     frequency: 1
     period: 'month'
 
-.controller 'HomeCtrl', ($scope, CatchUps, $cordovaContacts) ->
+.controller 'HomeCtrl', ($scope, $location, CatchUps, $cordovaContacts) ->
   $scope.catchUps = CatchUps.all()
+  if $scope.catchUps.length < 1
+    $scope.catchUps.push
+      person: name: formatted: "Add a catchup"
+      frequency: 1
+      period: 'month'
+  CatchUps.save $scope.catchUps
 
   $scope.pickContact = ->
     $cordovaContacts.pickContact().then (contact) ->
@@ -46,11 +58,14 @@ angular.module("CatchUp", ["ionic", "ngCordova"])
         catchUp.person.name.formatted is newCatchUp.person.name.formatted
 
       unless duplicate
-        $scope.catchUps.push newCatchUp
+        newLength = $scope.catchUps.push newCatchUp
         CatchUps.save $scope.catchUps
+        $location.path '/edit/' + (newLength - 1)
 
 .controller 'EditCtrl', ($scope, CatchUps, $stateParams, $ionicNavBarDelegate) ->
   $scope.catchUp = CatchUps.get $stateParams.catchUpId
+
+  $scope.FREQUENCY_SCALE = FREQUENCY_SCALE
 
   $ionicNavBarDelegate.changeTitle $scope.catchUp.person.name.formatted, 'forward'
 

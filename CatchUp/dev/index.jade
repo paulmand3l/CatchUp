@@ -6,13 +6,25 @@ html
     title
     link(href="css/ionic.app.css", rel="stylesheet")
 
+    // jQuery
+    link(href="lib/jquery-ui.css", rel="stylesheet")
+    script(src="lib/jquery.min.js")
+    script(src="lib/jquery-ui.min.js")
+    script(src="lib/jquery.ui.touch-punch.min.js")
+
+
     // ionic/angularjs js
     script(src="lib/ionic/js/ionic.bundle.js")
+
+    script(src="lib/slider.js")
+
     // cordova script (this will be a 404 during development)
     script(src="lib/ionic/js/ng-cordova.js")
     script(src="cordova.js")
+
     // your app's js
     script(src="js/app.js")
+
   body(ng-app="CatchUp")
     ion-nav-bar.bar-positive
       ion-nav-back-button.button-icon.ion-arrow-left-c
@@ -41,5 +53,7 @@ html
             span(ng-show="catchUp.frequency > 1") s
           p.change You can always change this later
 
-          .button-wrapper
-            button.button.button-block.button-large.button-royal.add-friend Add friend
+          //- .button-wrapper
+          //-   button.button.button-block.button-large.button-royal.add-friend Save
+
+          div(ui-slider="{orientation: 'vertical'}", min=0, max="{{FREQUENCY_SCALE.length}}", step=1, ng-model="rawFrequency")

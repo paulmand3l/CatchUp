@@ -5,8 +5,14 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
     <link href="css/ionic.app.css" rel="stylesheet">
+    <!-- jQuery-->
+    <link href="lib/jquery-ui.css" rel="stylesheet">
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/jquery-ui.min.js"></script>
+    <script src="lib/jquery.ui.touch-punch.min.js"></script>
     <!-- ionic/angularjs js-->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/slider.js"></script>
     <!-- cordova script (this will be a 404 during development)-->
     <script src="lib/ionic/js/ng-cordova.js"></script>
     <script src="cordova.js"></script>
@@ -38,9 +44,7 @@
           <p class="frequency">{{catchUp.frequency}}</p>
           <p class="period">{{catchUp.period}}<span ng-show="catchUp.frequency &gt; 1">s</span></p>
           <p class="change">You can always change this later</p>
-          <div class="button-wrapper">
-            <button class="button button-block button-large button-royal add-friend">Add friend</button>
-          </div>
+          <div ui-slider="{orientation: 'vertical'}" min="0" max="{{FREQUENCY_SCALE.length}}" step="1" ng-model="rawFrequency"></div>
         </ion-content>
       </ion-view>
     </script>
