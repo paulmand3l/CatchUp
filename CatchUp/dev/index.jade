@@ -32,7 +32,7 @@ html
 
     script(id="edit.html", type="text/ng-template")
       ion-view(title="{{catchUp.person.name.formatted}}")
-        ion-content.edit-content
+        ion-content.edit-content(scroll="false")
           p.how-often How often do you want to catch up?
           p.every Every
           p.frequency {{catchUp.frequency}}
