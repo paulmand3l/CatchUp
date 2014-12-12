@@ -8180,7 +8180,8 @@ ion-item.item {
       right: 50px; }
 
 .edit-content {
-  background-color: #F5F5F5; }
+  background-color: #F5F5F5;
+  margin-top: 60px; }
   .edit-content p {
     text-align: center;
     color: #888888;

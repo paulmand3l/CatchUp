@@ -1,22 +1,24 @@
 (function() {
-  var FREQUENCY_SCALE, f, frequencyList, period, _i, _len, _ref;
-
-  FREQUENCY_SCALE = [];
-
-  _ref = {
-    week: [1, 2, 3],
-    month: [1, 2, 3, 4, 6, 8],
-    year: [1]
-  };
-  for (period in _ref) {
-    frequencyList = _ref[period];
-    for (_i = 0, _len = frequencyList.length; _i < _len; _i++) {
-      f = frequencyList[_i];
-      FREQUENCY_SCALE.push([f, period]);
+  angular.module("CatchUp", ["ionic", "ngCordova", "ui.slider"]).constant('frequencyScale', (function() {
+    var frequency, frequencyList, frequencyScale, period, _i, _len, _ref;
+    frequencyScale = [];
+    _ref = {
+      week: [1, 2, 3],
+      month: [1, 2, 3, 4, 6],
+      year: [1]
+    };
+    for (period in _ref) {
+      frequencyList = _ref[period];
+      for (_i = 0, _len = frequencyList.length; _i < _len; _i++) {
+        frequency = frequencyList[_i];
+        frequencyScale.push({
+          frequency: frequency,
+          period: period
+        });
+      }
     }
-  }
-
-  angular.module("CatchUp", ["ionic", "ngCordova", "ui.slider"]).run(function($ionicPlatform) {
+    return frequencyScale;
+  })()).run(function($ionicPlatform) {
     return $ionicPlatform.ready(function() {
       if (window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -74,7 +76,7 @@
             formatted: "Add a catchup"
           }
         },
-        frequency: 1,
+        frequency: 2,
         period: 'month'
       });
     }
@@ -93,10 +95,22 @@
         }
       });
     };
-  }).controller('EditCtrl', function($scope, CatchUps, $stateParams, $ionicNavBarDelegate) {
-    $scope.catchUp = CatchUps.get($stateParams.catchUpId);
-    $scope.FREQUENCY_SCALE = FREQUENCY_SCALE;
-    return $ionicNavBarDelegate.changeTitle($scope.catchUp.person.name.formatted, 'forward');
+  }).controller('EditCtrl', function($scope, CatchUps, $stateParams, $ionicNavBarDelegate, frequencyScale) {
+    $scope.catchUps = CatchUps.all();
+    $scope.catchUp = $scope.catchUps[$stateParams.catchUpId];
+    $ionicNavBarDelegate.changeTitle($scope.catchUp.person.name.formatted, 'forward');
+    $scope.frequencyScale = frequencyScale;
+    $scope.rawFrequency = frequencyScale.indexOf(frequencyScale.filter(function(tick, i) {
+      return tick.frequency === $scope.catchUp.frequency && tick.period === $scope.catchUp.period;
+    })[0]);
+    $scope.$watch('rawFrequency', function(newValue, oldValue) {
+      $scope.catchUp.frequency = $scope.frequencyScale[newValue].frequency;
+      return $scope.catchUp.period = $scope.frequencyScale[newValue].period;
+    });
+    return $scope.saveCatchUp = function() {
+      CatchUps.save($scope.catchUps);
+      return $ionicNavBarDelegate.back();
+    };
   });
 
 }).call(this);

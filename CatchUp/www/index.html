@@ -38,14 +38,17 @@
     </script>
     <script id="edit.html" type="text/ng-template">
       <ion-view title="{{catchUp.person.name.formatted}}">
-        <ion-content scroll="false" class="edit-content">
+        <ion-pane class="edit-content">
           <p class="how-often">How often do you want to catch up?</p>
           <p class="every">Every</p>
           <p class="frequency">{{catchUp.frequency}}</p>
           <p class="period">{{catchUp.period}}<span ng-show="catchUp.frequency &gt; 1">s</span></p>
           <p class="change">You can always change this later</p>
-          <div ui-slider="{orientation: 'vertical'}" min="0" max="{{FREQUENCY_SCALE.length}}" step="1" ng-model="rawFrequency"></div>
-        </ion-content>
+          <div class="button-wrapper">
+            <button ng-click="saveCatchUp()" class="button button-block button-large button-royal add-friend">Save</button>
+          </div>
+          <div ui-slider="{orientation: 'vertical'}" min="0" max="{{frequencyScale.length-1}}" step="1" ng-model="rawFrequency"></div>
+        </ion-pane>
       </ion-view>
     </script>
   </body>

@@ -1,10 +1,16 @@
-FREQUENCY_SCALE = []
-for period, frequencyList of { week: [1, 2, 3], month: [1, 2, 3, 4, 6, 8], year: [1] }
-  for f in frequencyList
-    FREQUENCY_SCALE.push [f, period]
+
 
 
 angular.module("CatchUp", ["ionic", "ngCordova", "ui.slider"])
+
+.constant 'frequencyScale', do ->
+  frequencyScale = []
+  for period, frequencyList of { week: [1, 2, 3], month: [1, 2, 3, 4, 6], year: [1] }
+    for frequency in frequencyList
+      frequencyScale.push
+        frequency: frequency
+        period: period
+  return frequencyScale
 
 .run ($ionicPlatform) ->
   $ionicPlatform.ready ->
@@ -46,7 +52,7 @@ angular.module("CatchUp", ["ionic", "ngCordova", "ui.slider"])
   if $scope.catchUps.length < 1
     $scope.catchUps.push
       person: name: formatted: "Add a catchup"
-      frequency: 1
+      frequency: 2
       period: 'month'
   CatchUps.save $scope.catchUps
 
@@ -62,10 +68,24 @@ angular.module("CatchUp", ["ionic", "ngCordova", "ui.slider"])
         CatchUps.save $scope.catchUps
         $location.path '/edit/' + (newLength - 1)
 
-.controller 'EditCtrl', ($scope, CatchUps, $stateParams, $ionicNavBarDelegate) ->
-  $scope.catchUp = CatchUps.get $stateParams.catchUpId
-
-  $scope.FREQUENCY_SCALE = FREQUENCY_SCALE
+.controller 'EditCtrl', ($scope, CatchUps, $stateParams, $ionicNavBarDelegate, frequencyScale) ->
+  $scope.catchUps = CatchUps.all()
+  $scope.catchUp = $scope.catchUps[$stateParams.catchUpId]
 
   $ionicNavBarDelegate.changeTitle $scope.catchUp.person.name.formatted, 'forward'
+
+  $scope.frequencyScale = frequencyScale
+
+  $scope.rawFrequency = frequencyScale.indexOf frequencyScale.filter((tick, i) ->
+    return tick.frequency is $scope.catchUp.frequency and tick.period is $scope.catchUp.period
+  )[0]
+
+  $scope.$watch 'rawFrequency', (newValue, oldValue) ->
+    $scope.catchUp.frequency = $scope.frequencyScale[newValue].frequency
+    $scope.catchUp.period = $scope.frequencyScale[newValue].period
+
+  $scope.saveCatchUp = () ->
+    CatchUps.save $scope.catchUps
+    $ionicNavBarDelegate.back()
+
 

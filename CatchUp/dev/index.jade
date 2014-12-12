@@ -44,7 +44,7 @@ html
 
     script(id="edit.html", type="text/ng-template")
       ion-view(title="{{catchUp.person.name.formatted}}")
-        ion-content.edit-content(scroll="false")
+        ion-pane.edit-content
           p.how-often How often do you want to catch up?
           p.every Every
           p.frequency {{catchUp.frequency}}
@@ -53,7 +53,7 @@ html
             span(ng-show="catchUp.frequency > 1") s
           p.change You can always change this later
 
-          //- .button-wrapper
-          //-   button.button.button-block.button-large.button-royal.add-friend Save
+          .button-wrapper
+            button.button.button-block.button-large.button-royal.add-friend(ng-click="saveCatchUp()") Save
 
-          div(ui-slider="{orientation: 'vertical'}", min=0, max="{{FREQUENCY_SCALE.length}}", step=1, ng-model="rawFrequency")
+          div(ui-slider="{orientation: 'vertical'}", min=0, max="{{frequencyScale.length-1}}", step=1, ng-model="rawFrequency")
