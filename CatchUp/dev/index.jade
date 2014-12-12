@@ -4,7 +4,9 @@ html
     meta(charset="utf-8")
     meta(name="viewport", content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width")
     title
+
     link(href="css/ionic.app.css", rel="stylesheet")
+    link(href="lib/fonts/stylesheet.css", rel="stylesheet")
 
     // jQuery
     link(href="lib/jquery-ui.css", rel="stylesheet")
@@ -31,7 +33,7 @@ html
     ion-nav-view
 
     script(id="home.html", type="text/ng-template")
-      ion-view(title="Catch Up")
+      ion-view(title="<span class='brand'>Catch Up</span>")
         ion-nav-buttons(side="right")
           button.button.button-icon.icon.ion-plus-round(ng-click="pickContact()")
         ion-content
