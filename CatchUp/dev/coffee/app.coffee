@@ -68,7 +68,7 @@ angular.module("CatchUp", ["ionic", "ngCordova", "ui.slider"])
         CatchUps.save $scope.catchUps
         $location.path '/edit/' + (newLength - 1)
 
-.controller 'EditCtrl', ($scope, CatchUps, $stateParams, $ionicNavBarDelegate, frequencyScale) ->
+.controller 'EditCtrl', ($scope, CatchUps, $stateParams, $ionicNavBarDelegate, $cordovaLocalNotification, frequencyScale) ->
   $scope.catchUps = CatchUps.all()
   $scope.catchUp = $scope.catchUps[$stateParams.catchUpId]
 
@@ -86,6 +86,17 @@ angular.module("CatchUp", ["ionic", "ngCordova", "ui.slider"])
 
   $scope.saveCatchUp = () ->
     CatchUps.save $scope.catchUps
-    $ionicNavBarDelegate.back()
+
+    notificationId = $scope.catchUp.person.name.formatted.split('').reduce (hash, c) ->
+      return hash + c.charCodeAt(0)
+    , ''
+
+    $cordovaLocalNotification.add
+      id: 1
+      title: "Time Machine"
+      message: "You saved a CatchUp 10 seconds ago"
+      date: new Date(Date.now() + 10*1000)
+    .then ->
+      $ionicNavBarDelegate.back()
 
 

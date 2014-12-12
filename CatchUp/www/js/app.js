@@ -95,7 +95,7 @@
         }
       });
     };
-  }).controller('EditCtrl', function($scope, CatchUps, $stateParams, $ionicNavBarDelegate, frequencyScale) {
+  }).controller('EditCtrl', function($scope, CatchUps, $stateParams, $ionicNavBarDelegate, $cordovaLocalNotification, frequencyScale) {
     $scope.catchUps = CatchUps.all();
     $scope.catchUp = $scope.catchUps[$stateParams.catchUpId];
     $ionicNavBarDelegate.changeTitle($scope.catchUp.person.name.formatted, 'forward');
@@ -108,8 +108,19 @@
       return $scope.catchUp.period = $scope.frequencyScale[newValue].period;
     });
     return $scope.saveCatchUp = function() {
+      var notificationId;
       CatchUps.save($scope.catchUps);
-      return $ionicNavBarDelegate.back();
+      notificationId = $scope.catchUp.person.name.formatted.split('').reduce(function(hash, c) {
+        return hash + c.charCodeAt(0);
+      }, '');
+      return $cordovaLocalNotification.add({
+        id: 1,
+        title: "Time Machine",
+        message: "You saved a CatchUp 10 seconds ago",
+        date: new Date(Date.now() + 10 * 1000)
+      }).then(function() {
+        return $ionicNavBarDelegate.back();
+      });
     };
   });
 
